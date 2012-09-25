@@ -28,6 +28,15 @@ def index():
 	# render the template, pass in the animals dictionary refer to it as 'animals'
 	return render_template("main.html", animals=animals)
 
+@app.route('/test')
+def test():
+
+	templateData = {
+		'title' : 'Hello world',
+		'colors' : ['blue','green','red','yellow','purple','white','black']
+	}
+
+	return render_template("test.html", **templateData)
 
 
 # this is the 2nd route - can be access with /page2
@@ -43,7 +52,7 @@ def rent():
 	}
 
 	# get animal by animal_name
-	rentalData['animal'] = animals[rentalData.get('animal_name')]
+	rentalData['animal'] = animals[ rentalData.get('animal_name') ]
 
 
 	# is selected animal in stock?
