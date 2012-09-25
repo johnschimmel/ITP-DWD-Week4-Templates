@@ -1,43 +1,79 @@
-import os
+import os, datetime
+
 from flask import Flask, request # Retrieve Flask, our framework
 from flask import render_template
+
 app = Flask(__name__)   # create our flask app
+
+
+# SPIRIT ANIMAL CATALOG
+animals = {}
+animals['Bear']= {
+	'image':'bear.gif',
+	'spirit':'Hungry or Sleepy',
+	'inStock' : True
+}
+
+animals['Butterfly'] = {'image':'butterfly.gif', 'spirit':'Flighty', 'inStock' : True}
+animals['Camel'] = {'image':'camel.gif', 'spirit':'Funny', 'inStock' : True}
+animals['Dinosaur'] = {'image':'dinosaur.gif','spirit':'Loner', 'inStock' : True}
+animals['Dolphin'] = {'image':'dolphin.gif','spirit':'Likes water', 'inStock' : True}
+animals['Elephant'] = {'image':'elephant.gif','spirit':'Feels too big for body', 'inStock' : True}
+animals['Frog'] = {'image':'frog.gif','spirit':'Appears slimy', 'inStock' : False}
+
 
 # this is our main page
 @app.route("/")
 def index():
-    return render_template("main.html")
+	# render the template, pass in the animals dictionary refer to it as 'animals'
+	return render_template("main.html", animals=animals)
+
 
 
 # this is the 2nd route - can be access with /page2
-@app.route("/page2")
-def page2():
-	return "<h2>Welcome to page 2</h2><p>This is just amazing!</p>"
+@app.route("/rent", methods=["POST"])
+def rent():
+
+	# Get the user submitted data
+	rentalData = {
+		'name' : request.form.get('name'),
+		'life_goal' : request.form.get('lifegoal'),
+		'rental_time' : request.form.get('rentaltime'),
+		'animal_name' : request.form.get('animal')
+	}
+
+	# get animal by animal_name
+	rentalData['animal'] = animals[rentalData.get('animal_name')]
 
 
-# new route will accept both a GET and POST request from the client (web browser)
-@app.route("/form", methods=["GET","POST"])
-def simpleform():
+	# is selected animal in stock?
+	if rentalData['animal'].get('inStock') == False:
+		return render_template("out_of_stock.html", **rentalData)
 
-	# Did the client make a POST request?
-	if request.method == "POST":
 
-		# get the form data submitted and store it in a variable
-		user_name = request.form.get('user_name', 'Tim Berners-Lee')
 
-		# return custom HTML using the user submitted data
-		return "<html><body><h3>Hello %s! What an interesting name.</h3><br><a href='/form'>back to form</a></body><html>" % user_name
+	# determine return date, if 'eternity' not selected
+	if rentalData['rental_time'] != 'eternity':
+		now = datetime.datetime.now()
+
+		if rentalData['rental_time'] == "hour":
+			future = datetime.timedelta(hours=1)
+
+		elif rentalData['rental_time'] == "day":
+			future = datetime.timedelta(days=1)
+
+		elif rentalData['rental_time'] == "year":
+			future = datetime.timedelta(days=365.25)
+
+		rentalData['return_time'] = now + future
 
 	else:
+		rentalData['return_time'] = None
 
-		# client made a GET request for '/form'
-		# return a simple HTML form that POSTs to itself
-		return """<html><body>
-		<form action="/form" method="POST">
-			What's your name? <input type="text" name="user_name" id="user_name"/>
-			<input type="submit" value="submit it"/>
-		</form>
-		</body></html>"""
+
+
+	return render_template('rental_confirm.html', **rentalData)
+
 
 # start the webserver
 if __name__ == "__main__":

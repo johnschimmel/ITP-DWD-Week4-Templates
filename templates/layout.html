@@ -10,28 +10,72 @@
         <meta name="description" content="ITP DWD Example Site using templates">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+        <!-- Get Font from Google http://www.google.com/webfonts -->
+        <link href='http://fonts.googleapis.com/css?family=Peralta' rel='stylesheet' type='text/css'>
+
         <style>
+
+            /* full screen background image */
+            html { 
+                background: url({{ url_for('static', filename='img/canyon_bg.jpg') }}) no-repeat center center fixed; 
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+                
+            }
+
             body {
                 padding-top: 60px;
                 padding-bottom: 40px;
+                background-color:transparent;
             }
+
+            /* white background */
+            div.container {
+                 background: rgba(255, 255, 255, 0.6);
+            }
+
+            h1.pageheader {
+                font-family: 'Peralta', cursive;
+                font-size:65px;
+                line-height:72px;
+                text-align:center;
+                color:red;
+                text-shadow: 3px 3px 3px #000;
+            }
+
+            p,li, label {
+                font-size:18px;
+            }
+
+
         </style>
         {% block styles %}{% endblock %}
+
     </head>
     <body>
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
-
-
-
         <div class="container">
+
+            <h1 class="pageheader">
+                Uncle Andy's<br>
+                Rent A Spirit Animal
+            </h1>
+
+            <hr>
+
+
 
             {% block body %}{% endblock %}
 
 
             <footer>
                 <p>ITP DWD Fall 2012</p>
+                <p>Animals from <a href="http://www.arthursclipart.org/silhouettes/animals.htm">www.arthursclipart.org</a></p>
             </footer>
 
         </div> <!-- /container -->
