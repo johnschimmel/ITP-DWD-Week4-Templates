@@ -37,19 +37,22 @@
                  background: rgba(255, 255, 255, 0.6);
             }
 
-            h1.pageheader {
+            h1.pageheader a, h1.pageheader a:hover {
                 font-family: 'Peralta', cursive;
                 font-size:65px;
                 line-height:72px;
-                text-align:center;
+
                 color:red;
                 text-shadow: 3px 3px 3px #000;
+                text-align:center;
+
             }
 
             p,li, label {
                 font-size:18px;
             }
 
+            footer { text-align: center;}
 
         </style>
         {% block styles %}{% endblock %}
@@ -62,8 +65,8 @@
         <div class="container">
 
             <h1 class="pageheader">
-                Uncle Andy's<br>
-                Rent A Spirit Animal
+                <a href="/">Uncle Andy's<br>
+                Rent A Spirit Animal</a>
             </h1>
 
             <hr>
@@ -72,9 +75,9 @@
 
             {% block body %}{% endblock %}
 
-
+            <hr/>
             <footer>
-                <p>ITP DWD Fall 2012</p>
+                <p><a href="http://itppyweb.herokuapp.com">ITP DWD Fall 2012</a> | <a href="https://github.com/johnschimmel/ITP-DWD-Week4-Templates">See Code on Github</a></p>
                 <p>Animals from <a href="http://www.arthursclipart.org/silhouettes/animals.htm">www.arthursclipart.org</a></p>
             </footer>
 

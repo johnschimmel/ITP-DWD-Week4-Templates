@@ -74,6 +74,10 @@ def rent():
 
 	return render_template('rental_confirm.html', **rentalData)
 
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404
+
 
 # start the webserver
 if __name__ == "__main__":
