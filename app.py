@@ -1,13 +1,12 @@
 import os
 from flask import Flask, request # Retrieve Flask, our framework
+from flask import render_template
 app = Flask(__name__)   # create our flask app
 
 # this is our main page
 @app.route("/")
 def index():
-    return """Hello World!<br/><br/>
-    <a href='/page2'>Visit page #2</a><br>
-    <a href='/form'>Visit form page</a>"""
+    return render_template("main.html")
 
 
 # this is the 2nd route - can be access with /page2
