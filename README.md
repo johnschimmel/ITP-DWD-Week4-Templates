@@ -46,7 +46,7 @@ Using a template library, we can inject data into HTML with the template library
 
 Flask comes ready with Jinja2 for templates. Jinja2 is easy to use and learn, simple syntax. To use templates we'll include this line at the top of **app.py**,
 
-	import render_template
+	from flask import render_template
 
 ## Template example
 
